@@ -1,0 +1,30 @@
+{{applicationName}}
+
+<div class="kek">
+  <div class="container" [ngClass]="{additional: showAdditionalInfo}">
+    <div *ngFor='let item of _pokemons; let i = index' (click)="toggleInfo(item)">
+      <img [src]="item.Image" width="100px">
+      <br />
+      #{{item.GetId() | number:'3.'}}
+      <br />
+      {{item.Name}}
+      <br />
+      <div class="tag" *ngFor="let type of item.GetTypes()" [ngStyle]="{'background-color': getTypeColor(type)}">
+        {{type}}
+      </div>
+
+      <br *ngIf='i===4' />
+    </div>
+  </div>
+
+  <div class="info" *ngIf="showAdditionalInfo">
+    <p style="margin: 5px 5px -15px 0px; font-size: 20px;">INFO</p>
+    <br>
+    <input type="text" [(ngModel)]="selectedPokemon.Name">
+    <br>
+    <img [src]="selectedPokemon.Image" width="100px">
+    <br />
+    <p>Some information</p>
+    <button (click)="save()">Save</button>
+  </div>
+</div>

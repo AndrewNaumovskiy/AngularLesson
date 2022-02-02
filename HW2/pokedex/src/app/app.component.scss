@@ -1,0 +1,51 @@
+.kek{
+    display: flex;
+}
+
+.container {
+    margin-left: 10%;
+    width: 80%;
+    text-align: justify;
+    text-justify: distribute-all-lines;
+}
+
+.container>div{
+    height: 200px;
+    width: 19%;
+    vertical-align: top;
+    display: inline-block;
+    background:red;
+    margin: 0.5%;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: lightgray;
+    text-align: center;
+}
+
+.tag{
+    display: inline-block;
+    height: 12px;
+    width: 50px;
+    font-size: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin: 0px 3px;
+}
+
+.additional{
+    width: 60%;
+    margin-left: 5%;
+}
+
+.info{
+    margin-left: 5%;
+    width: 40%;
+    height: 230px;
+    border: 1px black solid;
+}
