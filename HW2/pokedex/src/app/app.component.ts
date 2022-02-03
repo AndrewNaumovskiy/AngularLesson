@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PokemonDeserializationHelper } from 'src/helperClasses/PokemonDeserializationHelper';
-import { Pokemon } from 'src/model/pokemon';
+import { ElementType, Pokemon } from 'src/model/pokemon';
 
 @Component({
   selector: 'app-root',
@@ -47,10 +47,72 @@ export class AppComponent {
       case 'Poison': return '#b97fc9';
       case 'Bug': return '#729f3f';
       case 'Flying': return '#3dc7ef';
+    }
+    return 'black';
+  }
 
+  getWeaknesses(types: Array<ElementType>): Array<ElementType> {
+    let res: Array<ElementType> = new Array<ElementType>();
+
+    for (let type of types) {
+      switch (type) {
+        case ElementType.Fire:
+          {
+            if (!res.includes(ElementType.Water))
+              res.push(ElementType.Water);
+            if (!res.includes(ElementType.Electric))
+              res.push(ElementType.Electric);
+            break;
+          }
+        case ElementType.Water:
+          {
+            if (!res.includes(ElementType.Grass))
+              res.push(ElementType.Grass);
+            if (!res.includes(ElementType.Poison))
+              res.push(ElementType.Poison);
+            break;
+          }
+
+        case ElementType.Electric:
+          {
+            if (!res.includes(ElementType.Water))
+              res.push(ElementType.Water);
+            if (!res.includes(ElementType.Electric))
+              res.push(ElementType.Electric);
+            break;
+          }
+        case ElementType.Grass:
+          {
+            if (!res.includes(ElementType.Fire))
+              res.push(ElementType.Fire);
+            break;
+          }
+        case ElementType.Poison:
+          {
+            if (!res.includes(ElementType.Fire))
+              res.push(ElementType.Fire);
+            break;
+          }
+        case ElementType.Bug:
+          {
+            if (!res.includes(ElementType.Water))
+              res.push(ElementType.Water);
+            if (!res.includes(ElementType.Electric))
+              res.push(ElementType.Electric);
+            break;
+          }
+        case ElementType.Flying:
+          {
+            if (!res.includes(ElementType.Water))
+              res.push(ElementType.Water);
+            if (!res.includes(ElementType.Electric))
+              res.push(ElementType.Electric);
+            break;
+          }
+      }
     }
 
-    return 'black';
+    return res;
   }
 
   save() {
