@@ -24,6 +24,32 @@
     <br>
     <img [src]="selectedPokemon.Image" width="100px">
     <br />
+
+    Type
+    <br>
+    <div class="tag" *ngFor="let type of selectedPokemon.GetTypes()"
+      [ngStyle]="{'background-color': getTypeColor(type)}">
+      {{type}}
+    </div>
+
+    <br>
+    Weaknesses
+    <br>
+
+    <div *ngFor="let type of selectedPokemon.GetTypes()">
+      <div [ngSwitch]="type">
+        <div *ngSwitchCase="'Fire'" class="tag" [ngStyle]="{'background-color': getTypeColor('Water')}">Water</div>
+        <div *ngSwitchCase="'Water'" class="tag" [ngStyle]="{'background-color': getTypeColor('Grass')}">Grass</div>
+        <div *ngSwitchCase="'Grass'" class="tag" [ngStyle]="{'background-color': getTypeColor('Fire')}">Fire</div>
+        <div *ngSwitchCase="'Electric'" class="tag" [ngStyle]="{'background-color': getTypeColor('Flying')}">Flying
+        </div>
+        <div *ngSwitchCase="'Poison'" class="tag" [ngStyle]="{'background-color': getTypeColor('Fire')}">Fire</div>
+        <div *ngSwitchCase="'Bug'" class="tag" [ngStyle]="{'background-color': getTypeColor('Fire')}">Fire</div>
+        <div *ngSwitchCase="'Flying'" class="tag" [ngStyle]="{'background-color': getTypeColor('Water')}">Water</div>
+      </div>
+    </div>
+
+
     <p>Some information</p>
     <button (click)="save()">Save</button>
   </div>
