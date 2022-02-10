@@ -9,10 +9,10 @@ export class TreeModel {
     }
 
     public SetLight() {
-        this.light = false;
+        this.light = true;
 
         setTimeout(() => {
-            this.light = true;
+            this.light = false;
         }, 100);
     }
 }
