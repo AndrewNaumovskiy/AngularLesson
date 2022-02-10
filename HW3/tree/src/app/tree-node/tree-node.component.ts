@@ -6,7 +6,6 @@ import { TreeModel } from 'src/models/treeModel';
   selector: 'app-tree-node',
   templateUrl: './tree-node.component.html',
   styleUrls: ['./tree-node.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TreeNodeComponent implements OnInit {
 
@@ -17,8 +16,6 @@ export class TreeNodeComponent implements OnInit {
   removeMe: EventEmitter<TreeModel> = new EventEmitter<TreeModel>();
 
   isEditMode: boolean = false;
-
-  lightUp: boolean = false;
 
   constructor() { }
 
@@ -50,12 +47,13 @@ export class TreeNodeComponent implements OnInit {
   }
 
   LightsUp() {
-
-    this.lightUp = true;
+    this.node.SetLight();
 
     setTimeout(() => {
-      this.lightUp = false;
-      console.log('off');
-    }, 0);
+
+      this.node.children.forEach((item: TreeModel) => {
+        item.SetLight();
+      })
+    }, 100);
   }
 }

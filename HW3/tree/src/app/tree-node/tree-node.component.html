@@ -9,10 +9,11 @@
     <button (click)="Remove(node)">Remove</button>
     <button (click)="CreateChild()">Create Child</button>
     <button (click)="LightsUp()">LightsUp</button>
-    <span style="color: transparent;  text-shadow: 0 0 0 RED;" *ngIf="lightUp">&#9899;</span>
+    <span style="color: transparent;  text-shadow: 0 0 0 RED;" *ngIf="node.light">&#9899;</span>
 </div>
 <ul>
     <li style="margin-top: 10px;" *ngFor="let node of node.children">
-        <app-tree-node [node]="node" (removeMe)="removeChild($event)"></app-tree-node>
+        <app-tree-node [node]="node" (removeMe)="removeChild($event)">
+        </app-tree-node>
     </li>
 </ul>
