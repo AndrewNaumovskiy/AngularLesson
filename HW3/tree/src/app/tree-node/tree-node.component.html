@@ -1,0 +1,18 @@
+<div>
+    <p *ngIf="!isEditMode">{{node.data}}</p>
+    <input *ngIf="isEditMode" [(ngModel)]="node.data">
+
+    <button (click)="ToggleEditMode()">
+        <div *ngIf="!isEditMode">Edit</div>
+        <div *ngIf="isEditMode">Save</div>
+    </button>
+    <button (click)="Remove(node)">Remove</button>
+    <button (click)="CreateChild()">Create Child</button>
+    <button (click)="LightsUp()">LightsUp</button>
+    <span style="color: transparent;  text-shadow: 0 0 0 RED;" *ngIf="lightUp">&#9899;</span>
+</div>
+<ul>
+    <li style="margin-top: 10px;" *ngFor="let node of node.children">
+        <app-tree-node [node]="node" (removeMe)="removeChild($event)"></app-tree-node>
+    </li>
+</ul>
