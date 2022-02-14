@@ -13,6 +13,6 @@ export class TreeModel {
 
         setTimeout(() => {
             this.light = false;
-        }, 100);
+        }, 1000);
     }
 }

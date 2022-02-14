@@ -6,7 +6,6 @@ import { GetStructureHelper } from 'src/helpers/getStuctureHelper';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
 
