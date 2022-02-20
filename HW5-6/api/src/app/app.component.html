@@ -1,0 +1,166 @@
+<div style="display:inline-block; vertical-align: top; width: 30%; height: 100%; background-color: pink;">
+  <h1>Filters</h1>
+  <p>Filter by VRM/VIN: <input type="text" [(ngModel)]="filters.vrmVin" (ngModelChange)="onFilterChanged()"></p>
+  <p>Filter by bodystyle: <input type="text" [(ngModel)]="filters.bodystyle" (ngModelChange)="onFilterChanged()"></p>
+  <p>Filter by make: <input type="text" [(ngModel)]="filters.make" (ngModelChange)="onFilterChanged()"></p>
+  <p>Filter by model: <input type="text" [(ngModel)]="filters.model" (ngModelChange)="onFilterChanged()"></p>
+  <p>Filter by date deliveder: <input type="date" [(ngModel)]="filters.dateDelivered"
+      (ngModelChange)="onFilterChanged()"></p>
+  <p>Show only not sold: <input type="checkbox" unchecked [(ngModel)]="filters.notSold"
+      (ngModelChange)="onFilterChanged()">
+  </p>
+  <p>Filter by color: <input type="text" [(ngModel)]="filters.color" (ngModelChange)="onFilterChanged()"></p>
+  <p>Filter by owner name: <input type="text" [(ngModel)]="filters.ownerName" (ngModelChange)="onFilterChanged()"></p>
+</div>
+<div style="display: inline-block; width: 70%;">
+  <button (click)="AddVehicle()">Add vehicles</button>
+  <div *ngFor="let vehicle of vehicles | allFilter: filters" class="vehicleContainer" soldDirective
+    [sold]='vehicle.notSold'>
+
+    <button (click)="RemoveVehicle(vehicle)">Remove vehicles</button>
+    <button (click)="EditVehicle(vehicle)">Edit vehicles</button>
+    <p>ID: {{vehicle.id}}</p>
+    <p>VRM: {{vehicle.vrm}}</p>
+    <p>VIN: {{vehicle.vin}}</p>
+    <p>Bodystyle: {{vehicle.bodystyle}}</p>
+    <p>Make: {{vehicle.manufacturer}}</p>
+    <p>Model: {{vehicle.model}}</p>
+    <p>Date delivered: {{vehicle.dateDelivered | date: 'MMM dd, yyyy' }}</p>
+    <p>Not sold: {{vehicle.notSold}}</p>
+    <div class="vehicleContainer">
+      <p>Color</p>
+      <p>Front: {{vehicle.color.frontPart}}</p>
+      <p>Middle: {{vehicle.color.middlePart}}</p>
+      <p>Back: {{vehicle.color.backPart}}</p>
+    </div>
+    <div class="vehicleContainer">
+      <p>Previous owners</p>
+      <div *ngFor="let owner of vehicle.previousOwners">
+        <button (click)="RemoveOwner(vehicle, owner)">Remove owner</button>
+        <p>Name: {{owner.name}}</p>
+        <p>Email: {{owner.email}}</p>
+        <p>Phone: {{owner.phone}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--CREATE FORM POPUP-->
+<div *ngIf="createFormPopupVisible" class="popup">
+  <button (click)="ClosePopup()" style="position: fixed; width: 40px; left: 95%">X</button>
+  <form [formGroup]="createVehicleForm" (ngSubmit)="onSubmit()">
+    <!--ID-->
+    <div>
+      <label for="id">ID</label>
+      <input id="id" readonly type="number" formControlName="id">
+    </div>
+
+    <!--VRM-->
+    <div>
+      <label for="vrm">VRM</label>
+      <input id="vrm" type="text" formControlName="vrm">
+      <span class="error" *ngIf="createVehicleForm.controls['vrm'].hasError('required')">required</span>
+      <span class="error" *ngIf="createVehicleForm.controls['vrm'].hasError('forbiddenValue')">BAD VALUE</span>
+    </div>
+
+    <!--VIN-->
+    <div>
+      <label for="vin">VIN</label>
+      <input id="vin" type="text" formControlName="vin">
+      <span class="error" *ngIf="createVehicleForm.controls['vin'].hasError('required')">required</span>
+      <span class="error" *ngIf="createVehicleForm.controls['vin']?.hasError('forbiddenValueAsync')">BAD VALUES
+        ASYNC</span>
+    </div>
+
+    <!--Bodystyle-->
+    <div>
+      <label for="bodystyle">Bodystyle</label>
+      <select id="bodystyle" formControlName="bodystyle">
+        <option value="cabriolet">Cabriolet</option>
+        <option value="coupe">Coupé</option>
+        <option value="hatchback">Hatchback</option>
+        <option value="microvan">Microvan</option>
+        <option value="panelvan">Panel van</option>
+        <option value="sedan">Sedan</option>
+        <option value="saloon">Saloon</option>
+        <option value="mpv">MPV</option>
+        <option value="suv">SUV</option>
+      </select>
+    </div>
+
+    <!--Manufacturer-->
+    <div>
+      <label for="manufacturer">Make</label>
+      <input id="manufacturer" type="text" formControlName="manufacturer">
+    </div>
+
+    <!--model-->
+    <div>
+      <label for="model">Model</label>
+      <input id="model" type="text" formControlName="model">
+    </div>
+
+    <!--DateDelivered-->
+    <div>
+      <label for="dateDelivered">Date Delivered</label>
+      <input id="dateDelivered" type="date" formControlName="dateDelivered">
+    </div>
+
+    <!--notSold-->
+    <div>
+      <label for="notSold">Not Sold</label>
+      <input id="notSold" type="checkbox" formControlName="notSold">
+    </div>
+
+    <!--Color-->
+    <div formGroupName="color">
+      <h4>Color</h4>
+      <!--frontPart-->
+      <div>
+        <label for="frontPart">Front Part</label>
+        <input id="frontPart" type="text" formControlName="frontPart">
+      </div>
+
+      <!--middlePart-->
+      <div>
+        <label for="middlePart">Middle Part</label>
+        <input id="middlePart" type="text" formControlName="middlePart">
+      </div>
+
+      <!--backPart-->
+      <div>
+        <label for="backPart">Back Part</label>
+        <input id="backPart" type="text" formControlName="backPart">
+      </div>
+    </div>
+
+    <div formArrayName="previousOwners">
+      <h4>Previous Owners</h4>
+      <div *ngFor="let owner of previousOwners.controls; let i = index" class="vehicleContainer">
+        <div [formGroupName]="i">
+          <div>
+            <label for="name">Owner`s Name</label>
+            <input id="name" type="text" formControlName="name">
+            <span class="error" *ngIf="previousOwners.controls[i].get('name')?.hasError('required')">required</span>
+          </div>
+          <div>
+            <label for="email">Owner`s Email</label>
+            <input id="email" type="text" formControlName="email">
+            <span class="error" *ngIf="previousOwners.controls[i].get('email')?.hasError('required')">required</span>
+            <span class="error" *ngIf="previousOwners.controls[i].get('email')?.hasError('email')">email</span>
+          </div>
+          <div>
+            <label for="phone">Owner`s Phone</label>
+            <input id="phone" type="text" formControlName="phone">
+            <span class="error" *ngIf="previousOwners.controls[i].get('phone')?.hasError('required')">required</span>
+          </div>
+
+        </div>
+      </div>
+      <button type="button" (click)="AddOwner()">Add Owner</button>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
